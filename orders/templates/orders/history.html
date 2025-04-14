@@ -1,0 +1,45 @@
+{% extends 'orders/base.html' %}
+
+{% block title %}Order History - Food Delivery{% endblock %}
+
+{% block content %}
+<div class="history-container">
+    <h1>Order History</h1>
+    
+    {% if orders %}
+    <table class="order-history">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Restaurant</th>
+                <th>Food Item</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Order Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.name }}</td>
+                <td>{{ order.contact }}</td>
+                <td>{{ order.restaurant }}</td>
+                <td>{{ order.food_item }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>${{ order.total_price }}</td>
+                <td>{{ order.order_date|date:"M d, Y H:i" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="no-orders">
+        <p>You haven't placed any orders yet.</p>
+        <a href="{% url 'order' %}" class="btn btn-primary">Place Your First Order</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

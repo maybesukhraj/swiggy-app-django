@@ -1,0 +1,45 @@
+{% extends 'orders/base.html' %}
+
+{% block title %}Payment - Food Delivery{% endblock %}
+
+{% block content %}
+<div class="bill-container">
+    <h1>💳 Secure Payment</h1>
+    
+    <div class="order-details">
+        <p><strong>Name:</strong> {{ name }}</p>
+        <p><strong>Contact:</strong> {{ contact }}</p>
+        <p><strong>Restaurant:</strong> {{ restaurant }}</p>
+        <p><strong>Food Item:</strong> {{ food_item }}</p>
+        <p><strong>Quantity:</strong> {{ quantity }}</p>
+        <p><strong>Order Total:</strong> ${{ total_price }}</p>
+    </div>
+    
+    <div class="payment-options">
+        <h2>Select Payment Method</h2>
+        <div class="payment-methods">
+            <div class="payment-method">
+                <input type="radio" id="credit-card" name="payment-method" checked>
+                <label for="credit-card">Credit Card</label>
+            </div>
+            <div class="payment-method">
+                <input type="radio" id="debit-card" name="payment-method">
+                <label for="debit-card">Debit Card</label>
+            </div>
+            <div class="payment-method">
+                <input type="radio" id="upi" name="payment-method">
+                <label for="upi">UPI</label>
+            </div>
+            <div class="payment-method">
+                <input type="radio" id="cash" name="payment-method">
+                <label for="cash">Cash on Delivery</label>
+            </div>
+        </div>
+    </div>
+    
+    <div class="payment-actions">
+        <a href="{% url 'success' %}" class="btn btn-primary">Pay Now</a>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Cancel Payment</a>
+    </div>
+</div>
+{% endblock %}
