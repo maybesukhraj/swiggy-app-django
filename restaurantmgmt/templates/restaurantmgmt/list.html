@@ -1,0 +1,62 @@
+{% extends 'restaurantmgmt/base.html' %}
+
+{% block title %}Restaurant Management{% endblock %}
+
+{% block content %}
+<div class="restaurant-header">
+    <div>
+        <h1>Restaurant Management</h1>
+        <p>Manage your restaurant listings and details</p>
+    </div>
+    <a href="{% url 'restaurantmgmt:create' %}" class="btn btn-primary">
+        <span>➕</span> Add New Restaurant
+    </a>
+</div>
+
+{% if restaurants %}
+<div class="restaurant-grid">
+    {% for restaurant in restaurants %}
+    <div class="restaurant-card">
+        <div class="restaurant-image">
+            {% if restaurant.management.image %}
+                <img src="{{ restaurant.management.image.url }}" alt="{{ restaurant.name }}">
+            {% else %}
+                <div style="height: 100%; background-color: #eee; display: flex; align-items: center; justify-content: center;">
+                    <span style="color: #999;">No image available</span>
+                </div>
+            {% endif %}
+        </div>
+        <div class="restaurant-details">
+            <h2 class="restaurant-name">{{ restaurant.name }}</h2>
+            <div class="restaurant-location">{{ restaurant.location }}</div>
+            
+            {% if restaurant.management %}
+            <p class="restaurant-description">{{ restaurant.management.description|truncatechars:120 }}</p>
+            <div class="restaurant-rating">
+                {% with ''|center:restaurant.management.rating as stars %}
+                {% for _ in stars %}★{% endfor %}
+                {% endwith %}
+                {% with ''|center:5|slice:restaurant.management.rating as empty_stars %}
+                {% for _ in empty_stars %}☆{% endfor %}
+                {% endwith %}
+            </div>
+            {% else %}
+            <p class="restaurant-description">No additional details available.</p>
+            {% endif %}
+            
+            <div class="card-actions">
+                <a href="{% url 'restaurantmgmt:update' restaurant.pk %}" class="btn btn-edit">Edit</a>
+                <a href="{% url 'restaurantmgmt:delete' restaurant.pk %}" class="btn btn-delete">Delete</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div style="text-align: center; padding: 4rem 2rem;">
+    <h2 style="color: #999; margin-bottom: 1.5rem;">No restaurants found</h2>
+    <p style="color: #666; margin-bottom: 2rem;">Get started by adding your first restaurant</p>
+    <a href="{% url 'restaurantmgmt:create' %}" class="btn btn-primary">Add Restaurant</a>
+</div>
+{% endif %}
+{% endblock %}
