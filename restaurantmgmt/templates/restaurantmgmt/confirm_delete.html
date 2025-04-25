@@ -1,0 +1,24 @@
+{% extends 'restaurantmgmt/base.html' %}
+
+{% block title %}Delete Restaurant{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-card" style="text-align: center;">
+        <h2 style="color: var(--danger-color); margin-bottom: 1.5rem;">Delete Restaurant</h2>
+        
+        <div style="margin: 2rem 0;">
+            <p style="font-size: 1.2rem; margin-bottom: 1rem;">Are you sure you want to delete "{{ object.name }}"?</p>
+            <p style="color: #666;">This action cannot be undone and will remove all associated data.</p>
+        </div>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div style="display: flex; justify-content: center; gap: 1rem;">
+                <a href="{% url 'restaurantmgmt:list' %}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-delete">Confirm Delete</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

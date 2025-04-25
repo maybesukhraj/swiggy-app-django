@@ -1,0 +1,82 @@
+{% extends 'restaurantmgmt/base.html' %}
+
+{% block title %}{% if object %}Edit{% else %}Add New{% endif %} Restaurant{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-header">
+        <h1>{% if object %}Edit{% else %}Add New{% endif %} Restaurant</h1>
+    </div>
+    
+    <div class="form-card">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-section">
+                <h3 class="form-section-title">Basic Information</h3>
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}">Restaurant Name</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                    <div class="error">{{ form.name.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.location.id_for_label }}">Location</label>
+                    {{ form.location }}
+                    {% if form.location.errors %}
+                    <div class="error">{{ form.location.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3 class="form-section-title">Details & Media</h3>
+                <div class="form-group">
+                    <label for="{{ management_form.description.id_for_label }}">Description</label>
+                    {{ management_form.description }}
+                    {% if management_form.description.errors %}
+                    <div class="error">{{ management_form.description.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ management_form.image.id_for_label }}">Restaurant Image</label>
+                    {{ management_form.image }}
+                    {% if management_form.image.errors %}
+                    <div class="error">{{ management_form.image.errors }}</div>
+                    {% endif %}
+                    
+                    {% if object.management.image %}
+                    <div class="image-preview">
+                        <img src="{{ object.management.image.url }}" alt="{{ object.name }}">
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ management_form.rating.id_for_label }}">Rating</label>
+                    {{ management_form.rating }}
+                    {% if management_form.rating.errors %}
+                    <div class="error">{{ management_form.rating.errors }}</div>
+                    {% endif %}
+                    
+                    <div class="star-rating">
+                        <span class="star-filled">★</span>
+                        <span class="star-filled">★</span>
+                        <span class="star-filled">★</span>
+                        <span class="star-empty">★</span>
+                        <span class="star-empty">★</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <a href="{% url 'restaurantmgmt:list' %}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Save Restaurant</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
